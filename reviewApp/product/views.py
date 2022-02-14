@@ -13,4 +13,7 @@ def contact(request):
 
 def products(request):
     return render(request, 'products.html')
+
+def reviews(request):
+    return render(request, 'reveiws.html')
 # Create your views here.

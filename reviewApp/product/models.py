@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Product(models.Model):
-    productid = models.AutoField(primary_key=True)
+    productid = models.AutoField(primary_key=True, )
     name = models.CharField(max_length=100)
     brand = models.CharField(max_length=100)
     averagecost = models.DecimalField(decimal_places=2, max_digits=8)
