@@ -1,9 +1,29 @@
 {% extends "base.html" %}
-{% block content%}
+{% block pagetitle%}
 
-<div>
-    <h1>PRODUCTS
-    </h1>
+<div class="text-secondary">
+    <h1>Products</h1>
+</div>
+
+{%endblock%}
+
+{% block products%}
+<div class="container ">
+    <h2 class="text-center text-muted">Product catalog</h2>
+    <br>
+    <div class="row flow-offset-1">
+        
+        {% for product in products %}
+      <div class="col-xs-6 col-md-4">
+        <div class="product tumbnail thumbnail-3"><a href="{{product.productid}}"><img class="rounded-circle" width="250px "src="{{product.productphoto.url}}" alt=""></a>
+          <div class="caption">
+            <h6><a href="{{product.productid}}">{{product.name}}</a></h6><span class="price">£{{product.averagecost}}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+    </div>
 </div>
 
 {%endblock%}

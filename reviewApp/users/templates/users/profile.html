@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% block pagetitle%}
+
+<div class="text-secondary">
+    <h1>Profile</h1>
+</div>
+
+{%endblock%}
+
+
+
 {% block content %}
 
 <div class="content-section">
@@ -7,9 +17,9 @@
         <p><img class="rounded-circle account-img" src="{{user.profile.image.url}}"></p>
     
         <div class="media-body">
-            <h2 class="account-heading">{{user.profile}}</h2>
-            <p class="text-secondary">{{user.username}}</p>
-            <p class="text-secondary">{{user.email}}</p>
+            <h2 class="account-heading">Profile for {{user}}</h2>
+            <p class="">{{user.username}}</p>
+            <p class="">{{user.email}}</p>
         </div>
     </div>
     <form method='POST' enctype="multipart/form-data">
@@ -27,6 +37,12 @@
                Update
            </button>
        </div>
+       <div class="form-group">
+        <button class="btn btn-outline-info" type="">
+            Change Password
+        </button>
+    </div>
+
    </form>
 </div>
 {% endblock content %}
