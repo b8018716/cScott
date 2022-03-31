@@ -1,7 +1,8 @@
 from itertools import product
+from webbrowser import get
 from django.shortcuts import render
 from django.http import HttpResponse
-from product.models import Product
+from product.models import Product, Review
 
 
 def home (request):
@@ -21,7 +22,8 @@ def products(request):
 
 def productdetail(request, product_id):
     product = Product.objects.get(productid=product_id)
-    return render(request, 'productdetail.html', context={'product':product})
+    reviews = Review.objects.filter(product_id=product_id)
+    return render(request, 'productdetail.html', context={'product':product, 'reviews':reviews})
 
 def reviews(request):
     return render(request, 'reveiws.html')
