@@ -15,7 +15,7 @@
         
         {% for product in products %}
       <div class="col-xs-6 col-md-4">
-        <div class="product tumbnail thumbnail-3"><a href="{{product.productid}}"><img class="rounded-circle" width="250px "src="{{product.productphoto.url}}" alt=""></a>
+        <div class="product tumbnail thumbnail-3"><a href="{{product.productid}}"><img class="" width="250px" height="250px"src="{{product.productphoto.url}}" alt=""></a>
           <div class="caption">
             <h6><a href="{{product.productid}}">{{product.name}}</a></h6><span class="price">£{{product.averagecost}}</span>
           </div>

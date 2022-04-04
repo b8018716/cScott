@@ -1,11 +1,14 @@
 from datetime import datetime
 from distutils.command.upload import upload
 from itertools import product
+from msilib.schema import SelfReg
 from sqlite3 import Date
 from tabnanny import verbose
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Product(models.Model):
@@ -18,6 +21,7 @@ class Product(models.Model):
     datereleased = models.DateField('Date Released')
     description = models.TextField('Description',blank=True)
     productphoto = models.ImageField(upload_to='productPhotos', verbose_name='Product')
+    featured = models.BooleanField(default=False, null=True)
     
     class Meta:
         verbose_name= "All Products"
@@ -61,14 +65,25 @@ class Tablet(Product):
 class Review(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    productRating = models.IntegerField('Rating',null=True)
+    productRating = models.PositiveIntegerField('Rating',null=True,validators=[MaxValueValidator(5)] )
     reviewContent = models.TextField('Content of Review',null=True)
     datePosted = models.DateTimeField('Posted',auto_now_add=True)
+    preview = models.TextField(null=True)
     
     class Meta:
         verbose_name_plural = "Reviews"
-    
 
+    def save(self, *args, **kwargs):
+        self.preview = self.reviewContent[0:140] + '...' 
+       
+        super(Review, self).save(*args, *kwargs)
+    
+    def get_absolute_url(self):
+        return reverse('productdetail', kwargs={'product_id':self.product.pk})
+
+    def __str__(self):
+        test = self.author.username + 's review of ' +  self.product.name
+        return test
 
 
 # Create your models here.

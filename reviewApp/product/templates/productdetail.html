@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block pagetitle%}
 
 <div class="text-secondary">
@@ -15,12 +16,73 @@
             <h3 class="card-title">{{product.name}}</h3>
             <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-6">
-                    <div class="white-box text-center"><img class="rounded-circle" width="250px "src="{{product.productphoto.url}}" alt=""></div>
+                    <div class="white-box text-center"><img class="rounded-square" width="250px "src="{{product.productphoto.url}}" alt=""></div>
                 </div>
                 <div class="col-lg-7 col-md-7 col-sm-6">
                     <h4 class="box-title mt-5">Product description</h4>
                     <p>{{product.description}}</p>
                     <h2 class="mt-5">£{{product.averagecost}}</h2>
+                    <table class="table table-striped ">
+                        <thead>
+                          <tr>
+                            <th scope="col">Tech Specs</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% if product.category == "Phone"%}
+                          <tr>
+                            <td>Number of Cameras</td>
+                            <td>{{product.phone.numberOfCameras}}</td>
+                          </tr>
+                          <tr>
+                            <td>Dimensions</td>
+                            <td>{{product.phone.dimensions}}</td>
+                          </tr>
+                          <tr>
+                            <td>Screen Resolution</td>
+                            <td>{{product.phone.screensize}}</td>
+                          </tr>
+                          <tr>
+                            <td>Operating System</td>
+                            <td>{{product.phone.operatingsystem}}</td>
+                          </tr>
+                          <tr>
+                            <td>Storage Capacity</td>
+                            <td>{{product.phone.memorySize}}</td>
+                          </tr>
+                            {% endif %}
+                            {% if product.category == "Laptop"%}
+                            <tr>
+                                <td>Operating System</td>
+                                <td>{{product.laptop.operatingsystem}}</td>
+                              </tr>
+                              <tr>
+                                <td>Ram Amount</td>
+                                <td>{{product.laptop.amountOfRam}}</td>
+                              </tr>
+                              <tr>
+                                <td>Memory Capacity</td>
+                                <td>{{product.laptop.memorySize}}</td>
+                              </tr>
+                              <tr>
+                                <td>Processor</td>
+                                <td>{{product.laptop.processor}}</td>
+                              </tr>
+                            {% endif %}
+                         
+                            {% if product.category == "Tablet"%}
+                            <tr>
+                                <td>Screen Resolution</td>
+                                <td>{{product.tablet.screensize}}</td>
+                              </tr>
+                              <tr>
+                                <td>Operating System</td>
+                                <td>{{product.tablet.operatingsystem}}</td>
+                              </tr>
+                            {% endif %}
+                        </tbody>
+                      
+                      </table>
                 </div>              
             </div>
         </div>
@@ -36,36 +98,54 @@
                 
                     <div class="bg-white rounded shadow-sm p-4 mb-4">
                         
-                        <h5 class="mb-1">All Reviews</h5>
-                        {% for review in reviews %}
+                        <h5 class="mb-1">Most Recent Reviews</h5>
+                        <hr>
+                        {% for review in reviewFour %}
                         <div class="reviews-members pt-4 pb-4">
                             <div class="row">
                                 <div class="col-md-1">
-                                    <img  height="80px" src="{{review.author.profile.image.url}}" class="mr-3 rounded-pill">
+                                    <a href="{%url 'userreviewlist' review.author.id%}">
+                                    <img  height="80px" width="80px" src="{{review.author.profile.image.url}}" class="mr-3 rounded-pill">
+                                    </a>
                                 </div>
-                                <div class="col-md-10">
+                                <div class="col-md-9">
                                     <div class="media-body">
                                         <div class="reviews-members-header">
                                             
-                                            <h6 class="mb-1 text-black">{{review.author}}</h6>
+                                            <h6 class="mb-1 text-black"><a href="{%url 'userreviewlist' review.author.id%}">{{review.author}}</a> rated {{review.productRating}} stars!</h6>
                                             <p class="text-gray">{{review.datePosted}}</p>
                                         </div>
                                         <div class="reviews-members-body">
-                                            <p> {{review.reviewContent}} </p>
+                                            <p> {{review.preview}} </p>
+                                            <small><a href="{% url 'reviewdetail' review.id%}">Read More</a></small>
                                         </div>
                                         
                                     </div>
                                 </div>
-
+                                {% if review.author == user %}
+                                <div class="col-md-1">
+                                    <a href="/review/{{review.id}}/update"><button class="btn">Edit</button></a>
+                                </div>
+                                <div class="col-md-1">
+                                    <a href="/review/{{review.id}}/delete"><button class="btn">Delete</button></a>
+                                </div>
+                                {% endif %}
+                                
                             </div>
                         </div>
+                        
                         <hr>
                         {% endfor %}
+                        {% if reviews.0.author == none %}
+                        <p class="text-center">There are currently no reviews</p>
+                        {% endif %}
                         
 
 
                         <hr>
-                        
+                        {% if reviews.0.author != none %}
+                        <a href="{% url 'reviewlist' product.productid%}">See all reviews</a>
+                        {% endif %}
                     </div>
 
 
@@ -74,13 +154,13 @@
                         <h5 class="mb-4">Add Review</h5>
                         
                         
-                        <form>
+                        <form method="post">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label>Your Comment</label>
-                                <textarea class="form-control"></textarea>
+                                {{rForm|crispy}}
                             </div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-sm" type="button"> Submit Comment </button>
+                                <button class="btn btn-primary btn-sm" type="submit"> Submit Comment </button>
                             </div>
                         </form>
                     </div>

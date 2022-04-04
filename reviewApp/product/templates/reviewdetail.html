@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block pagetitle%}
+
+<div class="text-secondary">
+    <h1>Review Details</h1>
+</div>
+
+{%endblock%}
+
+{% block reviewlist%}
+    <br>
+    <div class="row flow-offset-1">
+      <div class="col-md-1">
+      </div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-2">
+            <img  height="80px" width="80px" src="{{review.author.profile.image.url}}" class="mr-3 rounded-pill">
+          </div>
+          <div class="col-md-10">
+              <div class="media-body">
+                  <div class="reviews-members-header">
+                      <h6 class="mb-1 text-black">{{review.author}} rated {{review.product.name}} a total of {{review.productRating}} stars!</h6>
+                      <p class="text-gray">{{review.datePosted}}</p>
+                  </div>
+                  <div class="reviews-members-body">
+                      <p> {{review.reviewContent}} </p>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <a href="{%url 'productdetail' review.product.productid%}">
+        <div class="text-center">{{review.product.name}}</div>
+        <div class="white-box text-center"><img class="" height="150px "src="{{review.product.productphoto.url}}" alt=""></div>
+        </a>
+      </div>
+    </div>
+{%endblock%}

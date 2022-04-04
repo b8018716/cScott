@@ -14,7 +14,7 @@ class reviewInLine(admin.TabularInline):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['name','brand',]
+    list_display=['name','brand','category']
     inlines = [reviewInLine]
 
     
