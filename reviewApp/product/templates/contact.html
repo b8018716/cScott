@@ -1,15 +1,26 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block pagetitle%}
 
 <div class="text-secondary">
-    <h1>Contact</h1>
+    <h1>Contact Us</h1>
 </div>
 
 {%endblock%}
 
 {% block content%}
-<div>
-    <h2>AAAAAAAAAA</h2>
-</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ c_form|crispy }}
+    <br>
+    
+    <div class="form-actions">
+      
+      <div class="mt-0 mb-1">
+        <button type="submit" class="col-md-12 btn btn-dark" >Send</button>
+    </div>
+    </div>
+</form>
 
 {%endblock%}

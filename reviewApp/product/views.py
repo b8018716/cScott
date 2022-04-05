@@ -1,14 +1,5 @@
-from ast import Return
-from cmath import rect
-from itertools import product
-from multiprocessing import context
-from pyexpat import model
-from re import template
-import re
-from sre_constants import SUCCESS
-from typing import List
+from xml.sax.handler import feature_external_ges
 from .forms import *
-from webbrowser import get
 from django.shortcuts import render
 from django.http import HttpResponse
 from product.models import Product, Review
@@ -17,12 +8,16 @@ from django.http import HttpResponseRedirect
 from django.views.generic import UpdateView, ListView, DetailView, DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.core.mail import send_mail, BadHeaderError
+from django.contrib import messages
 
 
 
 def home (request):
-    return render(request, 'home.html')
+    featuredProducts = Product.objects.filter(featured=True)
+    featuredProducts = featuredProducts[:6]
+    return render(request, 'home.html', context={'featuredProducts':featuredProducts})
 
 
 def about(request):
@@ -30,10 +25,32 @@ def about(request):
 
 @login_required
 def contact(request):
-    return render(request, 'contact.html')
+    if request.method == 'POST':
+        c_form = contactForm(request.POST)
+        if c_form.is_valid():
+            subject = c_form.cleaned_data['subject']
+            emailsubject = "New Contact Form Message"
+            from_email = c_form.cleaned_data['fromEmail']
+            message = c_form.cleaned_data['message']
+
+            emailmessage = "You have a new message from " + from_email + ". The subject is: " + subject + " and the message is: " + message
+            try:
+                send_mail(emailsubject, emailmessage, from_email, ['cscottsysarchsreviewapp@gmail.com'] )
+                messages.success(request, "Message Successfully Sent!")
+            except BadHeaderError:
+                
+                return HttpResponse('Invalid header found.')
+            return redirect('contact')
+            
+            
+    else:
+        c_form = contactForm()
+
+    return render(request, 'contact.html',  context={'c_form':c_form,})
+
 
 def products(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('category')
     return render(request, 'products.html', context={'products':products})
 
 

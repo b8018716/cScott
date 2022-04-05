@@ -13,16 +13,23 @@
             </legend>
             {{ form|crispy }}
         </fieldset>
+        <br>
         <div class="form-group">
-            <button class"btn btn-outline-info" type="submit">
-                Login
+            <button type="submit" class="col-md-12 btn btn-dark">Login
             </button>
         </div>
     </form>
-    <div class"border-top pt-3">
+  
+    <div class="border-top pt-3">
         <small class="text-muted">
             Don't have an account?
             <a class="ml-2" href="{% url 'register' %}"> Register </a>
+        </small>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Forgot your password?
+            <a class="ml-2" href="{% url 'passwordreset' %}"> Reset Password </a>
         </small>
     </div>
 </div>

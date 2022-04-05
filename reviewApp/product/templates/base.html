@@ -15,9 +15,9 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <!-- Responsive navbar-->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark ">
             <div class="container px-5">
                 <a class="navbar-brand" href="{% url 'home' %}">Review App</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -57,6 +57,13 @@
             </div>
         </header>
         <section>
+            {% for message in messages %}
+                    <div class="container-fluid p-0">
+                        <div class="alert {{ message.tags }} alert-dismissible"  >
+                            {{ message }}
+                        </div>
+                    </div>
+            {% endfor %}
             <div class="container px-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-6">
@@ -71,9 +78,11 @@
             </div>
         </section>
         <section>
+          
             {% block products%}
             {% endblock %}
-
+            
+            
         </section>
         <section>
             <div class="container px-5">
@@ -84,7 +93,7 @@
         
         
         <!-- Footer-->
-        <footer class="py-5 bg-dark">
+        <footer class="py-5 bg-dark mt-auto ">
             <div class="container px-5"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2021</p></div>
         </footer>
         <!-- Bootstrap core JS-->

@@ -1,7 +1,3 @@
-from atexit import register
-from csv import list_dialects
-from itertools import product
-from pyexpat import model
 from django.contrib import admin
 from .models import Product, Review, Phone, Tablet, Laptop
 
@@ -10,11 +6,12 @@ class reviewInLine(admin.TabularInline):
     max_num = 2
     can_delete = False
     readonly_fields = ('author','productRating','reviewContent')
+    exclude = ('preview',)
 
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['name','brand','category']
+    list_display=['name','brand','category','featured']
     inlines = [reviewInLine]
 
     

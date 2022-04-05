@@ -14,17 +14,17 @@
     <fieldset class="form-group">
         <legend class="border-bottom mb-4">
             Delete Review of {{review.product}}
-            <div class="white-box text-center"><img class="rounded-circle" width="250px "src="{{review.product.productphoto.url}}" alt=""></div>
+            <div class="white-box text-center"><img class="rounded-square" width="250px "src="{{review.product.productphoto.url}}" alt=""></div>
         </legend>
         {{form|crispy}}
-aaaaa
+
         
     </fieldset>
     <div class="form-group">
-        <button class="btn btn-outline-info" type="submit">
+        <button class="col-md-3 btn btn-dark" type="submit">
             Yes, Delete
         </button>
-        <a class="btn btn-outline-secondary" href="{% url 'products'%}">Cancel </a>
+        <a class="col-md-3 btn btn-dark" href="{% url 'products'%}">Cancel </a>
     </div>
 </form>
 

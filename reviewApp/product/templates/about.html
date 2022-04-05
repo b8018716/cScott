@@ -1,15 +1,36 @@
 {% extends "base.html" %}
 {% block pagetitle%}
+{% load static %}
 
 <div class="text-secondary">
-    <h1>About</h1>
+    <h1>About Techshop</h1>
 </div>
 
 {%endblock%}
 
-{% block content%}
-<div>
-    <h2>AAAAAAAAAA</h2>
+{% block products%}
+
+<div class="container">
+    <div class="row mt-5">
+     <div class="col-6 text-center">  
+        <img width="500px" src="{% static 'assets/techshoplogo.png' %}">
+     </div>
+     <div class="col-6 text-center">
+        <h2>Our History</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ac tortor vitae purus faucibus ornare suspendisse sed. Adipiscing vitae proin sagittis nisl rhoncus. Id consectetur purus ut faucibus pulvinar elementum. 
+            Elit eget gravida cum sociis. Sit amet justo donec enim diam vulputate ut. A lacus vestibulum sed arcu non odio euismod lacinia at. 
+            Nisl rhoncus mattis rhoncus urna neque viverra. At auctor urna nunc id cursus metus. Quam vulputate dignissim suspendisse in est ante in nibh. 
+            Tempor orci dapibus ultrices in iaculis. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Dui vivamus arcu felis bibendum ut tristique et egestas. Amet volutpat consequat mauris nunc congue nisi vitae. Mauris augue neque gravida in fermentum et sollicitudin ac. Cursus vitae congue mauris rhoncus. Orci a scelerisque purus semper eget duis at tellus at. Mauris augue neque gravida in fermentum. Risus viverra adipiscing at in. Rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat.
+        </p>
+     </div>   
+    </div>
+    <div class="row mt-2">
+        <div class="text-center">
+        <img width="500px" class="rounded" src="{% static 'assets/techshophq.jpg'%}">
+    </div>
+    </div>
 </div>
 
 {%endblock%}
