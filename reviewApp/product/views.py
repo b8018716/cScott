@@ -57,9 +57,9 @@ def products(request):
 def productdetail(request, product_id):
     product = Product.objects.get(productid=product_id)
     reviews = Review.objects.filter(product_id=product_id).order_by('-datePosted')
-    print(reviews)
+    
     reviewFour = reviews[:4]
-    print(reviewFour)
+    
     new_review = None
     if request.method == 'POST':
         rForm = addReview(data=request.POST, instance=new_review)
@@ -99,7 +99,7 @@ class UserReviewListView(ListView):
 
     def get_queryset(self):
         self.user = get_object_or_404(User, id = self.kwargs['author_id'])
-        print(self.user)
+        
         return Review.objects.filter(author_id=self.user).order_by('-datePosted')
 
 class ReviewDetailView(DetailView):
@@ -126,7 +126,7 @@ class ReviewUpdateView(UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         
         form.instance.author = self.request.user
-        print("Form is valid")
+        
         return super().form_valid(form)
 
     
